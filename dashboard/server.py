@@ -25,7 +25,7 @@ from utils import validate_url
 log = logging.getLogger('server')
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(name)s] %(message)s', datefmt='%H:%M:%S')
 
-OCLAW_HOME = pathlib.Path.home() / '.openclaw'
+OCLAW_HOME = pathlib.Path(os.environ.get('OPENCLAW_HOME', str(pathlib.Path.home() / '.openclaw')))
 MAX_REQUEST_BODY = 1 * 1024 * 1024  # 1 MB
 ALLOWED_ORIGIN = None  # Set via --cors; None means restrict to localhost
 _DEFAULT_ORIGINS = {

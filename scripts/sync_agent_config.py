@@ -3,7 +3,7 @@
 同步 openclaw.json 中的 agent 配置 → data/agent_config.json
 支持自动发现 agent workspace 下的 Skills 目录
 """
-import json, pathlib, datetime, logging
+import json, pathlib, datetime, logging, os
 from file_lock import atomic_json_write
 
 log = logging.getLogger('sync_agent_config')
@@ -12,7 +12,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(name)s] %(message
 # Auto-detect project root (parent of scripts/)
 BASE = pathlib.Path(__file__).parent.parent
 DATA = BASE / 'data'
-OPENCLAW_CFG = pathlib.Path.home() / '.openclaw' / 'openclaw.json'
+OPENCLAW_HOME = pathlib.Path(os.environ.get('OPENCLAW_HOME', str(pathlib.Path.home() / '.openclaw')))
+OPENCLAW_CFG = OPENCLAW_HOME / 'openclaw.json'
 
 ID_LABEL = {
     'taizi':    {'label': '太子',   'role': '太子',     'duty': '飞书消息分拣与回奏',  'emoji': '🤴'},
